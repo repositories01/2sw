@@ -1,7 +1,19 @@
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import React from 'react'
+import GlobalStyle from './styles/global';
+
+import AppProvider from './hooks/index';
+import Routes from './routes';
+
 const App: React.FC = () => (
-  <h1>teste</h1>
+  <BrowserRouter>
+    <AppProvider>
+      <Routes />
+    </AppProvider>
+
+    <GlobalStyle />
+  </BrowserRouter>
 );
 
 export default App;
