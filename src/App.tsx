@@ -1,19 +1,19 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store/index';
 
 import GlobalStyle from './assets/globalStyle/global';
 
-import AppProvider from './hooks/index';
+import HookProvider from './hooks/index';
 import Routes from './routes';
 
 const App: React.FC = () => (
-  <BrowserRouter>
-    <AppProvider>
+  <Provider store={store}>
+    <HookProvider>
       <Routes />
-    </AppProvider>
-
+    </HookProvider>
     <GlobalStyle />
-  </BrowserRouter>
+  </Provider>
 );
 
 export default App;

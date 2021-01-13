@@ -1,8 +1,14 @@
 
-import { SignUpFormData} from '../interfaces/auth.interface'
 
-export const signUp = (data: SignUpFormData ) => {
+import { SignUpFormData } from '../interfaces/auth.interface'
+export const signUp = async (data: SignUpFormData) => {
+  try {
 
+
+    
+  } catch (e) {
+
+  }
 };
 
 
