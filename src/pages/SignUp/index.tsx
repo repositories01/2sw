@@ -13,15 +13,11 @@ import logoImg from "../../assets/logo.png";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 
+import { SignUpFormData } from '../../interfaces/auth.interface'
+
 import { Container, Content, AnimationContainer, Background } from "./styles";
 
-interface SignUpFormData {
-  name: string;
-  email: string;
-  cpf: string;
-  password: string;
-  city: string;
-}
+import { signUp } from '../../services/authService'
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -29,69 +25,72 @@ const SignUp: React.FC = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = useCallback(
-    async (data: SignUpFormData) => {
-      try {
-        formRef.current?.setErrors({});
-        setLoading(true);
+  const handleSubmit = (data: SignUpFormData) => {
+    signUp(data)
+  }
+  // const handleSubmit = useCallback(
+  // async (data: SignUpFormData) => {
+  //   try {
+  //     formRef.current?.setErrors({});
+  //     setLoading(true);
 
-        const schema = Yup.object().shape({
-          name: Yup.string().required("Nome obrigatório"),
-          email: Yup.string()
-            .required("Email obrigatório")
-            .email("Digite um e-mail válido"),
-          cpf: Yup.number().required().min(11, "Mínimo 11 digitos"),
-          city: Yup.string().required("Cidade obrigatório"),
-          password: Yup.string().min(4, "No mínimo 4 dígitos"),
-        });
+  //     const schema = Yup.object().shape({
+  //       name: Yup.string().required("Nome obrigatório"),
+  //       email: Yup.string()
+  //         .required("Email obrigatório")
+  //         .email("Digite um e-mail válido"),
+  //       cpf: Yup.number().required().min(11, "Mínimo 11 digitos"),
+  //       city: Yup.string().required("Cidade obrigatório"),
+  //       password: Yup.string().min(4, "No mínimo 4 dígitos"),
+  //     });
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
-        // the token and id should be return from backend
-        await api.post("/users", {
-          id: uuid(),
-          name: data.name,
-          cpf: data.cpf,
-          email: data.email,
-          password: data.password,
-          address: {
-            city: data.city,
-            zip: '',
-            street:'',
-            number: '',
-            district: '',
-          },
-          token: uuid(),
-        });
+  //     await schema.validate(data, {
+  //       abortEarly: false,
+  //     });
+  //     // the token and id should be return from backend
+  //     await api.post("/users", {
+  //       id: uuid(),
+  //       name: data.name,
+  //       cpf: data.cpf,
+  //       email: data.email,
+  //       password: data.password,
+  //       address: {
+  //         city: data.city,
+  //         zip: '',
+  //         street:'',
+  //         number: '',
+  //         district: '',
+  //       },
+  //       token: uuid(),
+  //     });
 
-        history.push("/");
+  //     history.push("/");
 
-        addToast({
-          type: "success",
-          title: "Cadastro realizado!",
-          description: "Você já pode fazer seu login no 2SEED!",
-        });
-      } catch (err) {
-        console.log(err);
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
+  //     addToast({
+  //       type: "success",
+  //       title: "Cadastro realizado!",
+  //       description: "Você já pode fazer seu login no 2SEED!",
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     if (err instanceof Yup.ValidationError) {
+  //       const errors = getValidationErrors(err);
 
-          formRef.current?.setErrors(errors);
+  //       formRef.current?.setErrors(errors);
 
-          return;
-        }
-        addToast({
-          type: "error",
-          title: "Erro no cadastro",
-          description: "Ocorreu um erro ao fazer o cadastro, tente novamente.",
-        });
-      } finally {
-        setLoading(false);
-      }
-    },
-    [addToast, history]
-  );
+  //       return;
+  //     }
+  //     addToast({
+  //       type: "error",
+  //       title: "Erro no cadastro",
+  //       description: "Ocorreu um erro ao fazer o cadastro, tente novamente.",
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // },
+  // [addToast, history]
+  // );
 
   return (
     <Container>
