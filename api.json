@@ -12,6 +12,21 @@
         "district": "Recreio dos Bandeirantes",
         "city": "Rio de Janeiro"
       }
+    },
+    {
+      "id": "d1c6b555-dbe0-4ad2-bb7f-4eb09f65bbe8",
+      "name": "thiago",
+      "cpf": "123456789",
+      "email": "contato@thiagomedina.me",
+      "password": "123456",
+      "address": {
+        "city": "Rio de Janeiro",
+        "zip": "",
+        "street": "",
+        "number": "",
+        "district": ""
+      },
+      "token": "47252b07-3f20-4599-848c-f14c685940c7"
     }
   ]
 }
